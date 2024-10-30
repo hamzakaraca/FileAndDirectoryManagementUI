@@ -1,0 +1,12 @@
+mat-tree-node {
+  display: flex;
+  align-items: center;
+}
+
+mat-icon {
+  margin-right: 8px;
+}
+
+mat-checkbox {
+  margin-left: 8px;
+}
