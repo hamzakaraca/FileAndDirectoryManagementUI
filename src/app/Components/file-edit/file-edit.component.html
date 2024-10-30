@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Install Angular</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>Content girin</h3>
+  <textarea [(ngModel)]="fileTreeService.fileEditModel.fileContent" class="content-area" name="" id=""></textarea>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" (click)="writeFile()" cdkFocusInitial>Save</button>
+</mat-dialog-actions>

@@ -1,0 +1,9 @@
+<mat-form-field>
+    <mat-label>Search Type</mat-label>
+    <mat-select [(ngModel)]="searchingType" name="searchType">
+      <mat-option *ngFor="let searchingMethod of searchingMethods" [value]="searchingMethod.value">
+        {{searchingMethod.viewValue}}
+      </mat-option>
+      <button (click)="checkDurum(this.searchingType)"></button>
+    </mat-select>
+  </mat-form-field>

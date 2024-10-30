@@ -1,8 +1,9 @@
 export interface FlatNode {
-    name: string;
-    expandable: boolean;
-    level: number;
-    size:number,
-    isDirectory:boolean
-  }
+  expandable: boolean;
+  name: string;
+  level: number;
+  isDirectory: boolean;
+  size?: number;
+  filePath:string
+}
   

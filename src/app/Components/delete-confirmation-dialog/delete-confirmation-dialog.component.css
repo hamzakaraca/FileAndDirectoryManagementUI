@@ -1,0 +1,36 @@
+/* Dialog başlığını stillendirin */
+mat-dialog-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Dialog içeriğini stillendirin */
+  mat-dialog-content {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  /* Dialog butonlarını stillendirin */
+  mat-dialog-actions {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  /* Evet butonunu vurgulamak için */
+  button[color="warn"] {
+    background-color: #f44336; /* Kırmızı ton */
+    color: white;
+  }
+  
+  /* Hayır butonunun görünümünü değiştirmek için */
+  button {
+    background-color: #e0e0e0; /* Gri ton */
+    color: black;
+  }
+  
+  /* Butonlar üzerine gelindiğinde efekt vermek için */
+  button:hover {
+    opacity: 0.8; /* Buton üzerine gelindiğinde opaklık azalt */
+  }
+  

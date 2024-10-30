@@ -1,3 +1,137 @@
-.file-icon {
-  margin-right: 8px;
+/* Genel Stil Ayarları */
+mat-tree {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  text-align: center;
+}
+
+mat-spinner {
+  width: 50px; /* İsteğe göre boyutlandırın */
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+/* Dosya ve Klasör İkonlarının Stili */
+mat-icon.file-icon {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #616161;
+}
+
+/* Düğüm Adı ve Boyutu için Yazı Stili */
+mat-tree-node {
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #424242;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+mat-tree-node:last-child {
+  border-bottom: none;
+}
+
+/* Dosya Boyutu Renk Ayarı */
+mat-tree-node span.size {
+  color: #757575;
+  font-size: 12px;
+}
+
+/* Button Row için Flex Container */
+.example-button-row {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-flex-container {
+  display: flex;
+}
+
+.example-button-container {
+  margin-left: 15px;
+}
+
+/* Button Stilleri */
+button[mat-fab] {
+  background-color: #e91e63;
+  color: white;
+  width: 40px;
+  height: 40px;
+}
+
+button[mat-fab] mat-icon {
+  font-size: 18px;
+}
+
+button[mat-raised-button] {
+  background-color: #3fb53f;
+  color: white;
+  margin-right: 15px;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #303f9f;
+}
+
+/* Form Stilleri */
+.example-form {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-label {
+  color: #757575;
+}
+
+input.mat-input-element {
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+mat-form-field.mat-focused .mat-form-field-label {
+  color: #3f51b5;
+}
+
+/* İkonlar için Stil */
+mat-icon.matTreeNodeToggle {
+  cursor: pointer;
+  margin-right: 10px;
+  color: #424242;
+}
+
+mat-icon.matTreeNodeToggle:hover {
+  color: #1e88e5;
+}
+
+/* Dosya ve Klasör Seçimi */
+mat-tree-node.selected {
+  background-color: rgba(63, 81, 181, 0.1);
+}
+

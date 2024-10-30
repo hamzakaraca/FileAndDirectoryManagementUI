@@ -62,25 +62,16 @@
 // }
 
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { FileTreeService } from 'src/app/Services/file.service';
-
-interface FileNode {
-  name: string;
-  isDirectory: boolean;
-  size?: number;
-  children?: FileNode[];
-}
-
-interface FlatNode {
-  expandable: boolean;
-  name: string;
-  level: number;
-  isDirectory: boolean;
-  size?: number;
-}
+import { FileNode } from 'src/app/Models/FileNode';
+import { FlatNode } from 'src/app/Models/FlatNode';
+import { MatDialog } from '@angular/material/dialog';
+import { FileEditComponent } from '../file-edit/file-edit.component';
+import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { FileType } from 'src/app/Models/FileType';
 
 @Component({
   selector: 'app-file-tree',
@@ -88,12 +79,20 @@ interface FlatNode {
   styleUrls: ['./file-tree.component.css']
 })
 export class FileTreeComponent {
+  selectDirectory: boolean = false;
+  dataLoaded: boolean = false;
+  newFileName: string = ''; // Dosya adı için input
+  newFileContent: string = ''; // Dosya içeriği için input
+  selectedNode: any = null;isDeleting = false; // Spinner kontrolü için yeni değişken
+  selectedFileType:string
+
   private _transformer = (node: FileNode, level: number): FlatNode => ({
     expandable: !!node.children && node.children.length > 0,
     name: node.name,
     level: level,
     isDirectory: node.isDirectory,
     size: node.size,
+    filePath: node.filePath
   });
 
   treeControl = new FlatTreeControl<FlatNode>(
@@ -110,66 +109,117 @@ export class FileTreeComponent {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(private fileTreeService:FileTreeService) {
-    // Test verileri ile dolduruyoruz
-    const data: FileNode[] = [
-      {
-        name: 'C Klasörü',
-        isDirectory: true,
-        children: [
-          { name: 'Dosya1.txt', isDirectory: false, size: 14 },
-          { name: 'Dosya2.txt', isDirectory: false, size: 10 },
-          {
-            name: 'Alt Klasör',
-            isDirectory: true,
-            children: [{ name: 'Dosya3.txt', isDirectory: false, size: 5 }]
-          }
-        ]
-      }
-    ];
-    // this.dataSource.data = data;
+  constructor(private fileTreeService: FileTreeService) {
     this.getFileTree();
-    
   }
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
   getFileTree() {
     this.fileTreeService.getFileTree().subscribe(value => {
-      console.log("API Çıktısı:", value); // API çıktısını kontrol et
       const cleanedData = this.cleanData(value);
-      console.log("Temizlenmiş Veri:", cleanedData); // Dönüştürülen veriyi kontrol et
       this.dataSource.data = cleanedData;
+      this.dataLoaded = true;
     });
   }
-  
-  
-  // `Children` alanını `children` olarak yeniden adlandıran fonksiyon
+
+  // Gelen veriyi dönüştürme fonksiyonu
   cleanData(nodes: any[]): FileNode[] {
     return nodes.map(node => {
-      // `Children` alanını `children` olarak atıyoruz
       return {
         name: node.Name,
         isDirectory: node.IsDirectory,
         size: this.convertBytesToGB(node.Size),
-        filePath: node.FilePath,
-        children: node.Children ? this.cleanData(node.Children) : [] // `Children` içeriğini `children` alanına atıyoruz
+        filePath: node.FilePath || '',
+        children: node.Children ? this.cleanData(node.Children) : []
       };
     });
   }
+
+  // Dosya oluşturma metodu
+  createFile(filePath: string) {
+    // Input alanları boşsa işlem yapılmıyor
+    if (this.newFileName && this.newFileContent) {
+      const fullFilePath = `${filePath}/${this.newFileName+this.selectedFileType}`; // Dosya yolu ve dosya adını birleştir
+      const content = this.newFileContent;
+      console.log(fullFilePath + " " + content)
   
+      // Servis çağrısı
+      this.fileTreeService.createFile(fullFilePath, content).subscribe(
+        (response) => {
+          console.log(response);
+          this.getFileTree(); // Dosya oluşturulduktan sonra ağacı güncelle
+          this.newFileName = ''; // Input alanlarını temizle
+          this.newFileContent = '';
+          this.selectedNode = null; // Formu gizle
+        },
+        (error) => {
+          console.error("Dosya oluşturma hatası:", error);
+          if (error.error && error.error.errors) {
+            // Validasyon hatalarını göster
+            console.log("Validasyon hataları:", error.error.errors);
+          }
+        }
+      );
+    } else {
+      console.error("File name or content boş olamaz.");
+    }
+  }
+  
+
   convertBytesToGB(bytes: number): number {
     if (bytes === null || bytes === undefined) {
       return 0; // Null veya undefined kontrolü
     }
-    return Math.floor(bytes / (1024 * 1024)); // 1 GB = 1024 * 1024 * 1024 bytes
+    return Math.floor(bytes / (1024 * 1024)); // 1 GB = 1024 * 1024 bytes
   }
+
+  deleteFile(filePath: string) {
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent);
   
-  deleteFile(filePath:string){
-    console.log(filePath)
-    this.fileTreeService.deleteFile(filePath)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Kullanıcı "Evet" butonuna bastı
+        this.fileTreeService.deleteFile(filePath).subscribe(() => {
+          
+          this.getFileTree(); // Dosya silindikten sonra ağacı güncelle
+          
+        });
+      }
+    });
   }
+
+  setSelectDirectory(node: any) {
+    this.selectedNode = this.selectedNode === node ? null : node;
+  }
+  readonly dialog = inject(MatDialog);
+
+  openDialog(filePath:string) {
+    this.fileTreeService.readFile(filePath).subscribe({
+      next: (response) => {
+        this.fileTreeService.fileEditModel.fileContent=response
+        this.fileTreeService.fileEditModel.filePath=filePath
+        const dialogRef = this.dialog.open(FileEditComponent);
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+
+      },
+      error: (error) => {
+        console.error('API hatası oluştu:', error.message);
+      },
+      complete: () => {
+        console.log('Silme isteği tamamlandı');
+      }
+    });
+
+  }
+
+  
+  fileTypes: FileType[] = [
+    { value: '.txt', viewValue: 'Text File' },
+    { value: '.pdf', viewValue: 'PDF File' }
+  ];
+
+
 }
-
-
-
