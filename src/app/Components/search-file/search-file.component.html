@@ -1,9 +1,57 @@
-<mat-form-field>
-    <mat-label>Search Type</mat-label>
-    <mat-select [(ngModel)]="searchingType" name="searchType">
-      <mat-option *ngFor="let searchingMethod of searchingMethods" [value]="searchingMethod.value">
-        {{searchingMethod.viewValue}}
-      </mat-option>
-      <button (click)="checkDurum(this.searchingType)"></button>
+<div class="search-container">
+  <mat-form-field>
+    <mat-select [(ngModel)]="selectedSearchMethod" (selectionChange)="onSearchMethodChange()">
+      <mat-option value="fileName">İsme Göre Ara</mat-option>
+      <mat-option value="fileType">Dosya Tipine Göre Ara</mat-option>
+      <mat-option value="date">Tarihe Göre Ara</mat-option>
     </mat-select>
   </mat-form-field>
+
+  <ng-container *ngIf="selectedSearchMethod === 'fileName' || selectedSearchMethod === 'fileType'">
+    <mat-form-field>
+      <input matInput [(ngModel)]="searchText" placeholder="Arama terimi...">
+    </mat-form-field>
+  </ng-container>
+
+  <ng-container *ngIf="selectedSearchMethod === 'date'">
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="searchDate" placeholder="Tarih seçin">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </ng-container>
+
+  <button mat-raised-button color="primary" (click)="search()">Ara</button>
+</div>
+
+<!-- Loading Spinner -->
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner diameter="40"></mat-spinner>
+</div>
+
+<!-- Arama Sonuçları -->
+<div class="search-results" *ngIf="allSearchResults.length > 0">
+  <h3>Arama Sonuçları (Toplam: {{totalResults}})</h3>
+  <div class="result-items">
+    <div class="result-item" *ngFor="let file of searchResults">
+      <mat-icon>{{ file.isDirectory ? 'folder' : 'insert_drive_file' }}</mat-icon>
+      <div class="file-info">
+        <div class="file-name">{{ file.filePath }}</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Paginator -->
+  <mat-paginator
+    [length]="totalResults"
+    [pageSize]="pageSize"
+    [pageIndex]="currentPage"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)"
+    aria-label="Sayfa seç">
+  </mat-paginator>
+</div>
+
+<div *ngIf="allSearchResults.length === 0 && hasSearched && !isLoading" class="no-results">
+  Sonuç bulunamadı
+</div>

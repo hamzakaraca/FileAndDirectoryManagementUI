@@ -1,5 +1,53 @@
-.content-area{
-    width: 60vw;
-    height: 60vh;
-    border-radius: 20px;
+.edit-dialog-container {
+  padding: 24px;
+  min-width: 600px;
+}
+
+.content-area {
+  width: 100%;
+  min-height: 60vh;
+  border-radius: var(--border-radius);
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: #fafafa;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.content-area:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+::ng-deep .mat-dialog-title {
+  color: var(--primary-color);
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+::ng-deep .mat-dialog-actions {
+  padding: 16px 0 0;
+  margin-bottom: 0;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+button {
+  min-width: 100px;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+}
+
+button.mat-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+button.mat-stroked-button {
+  border-color: rgba(0, 0, 0, 0.12);
 }

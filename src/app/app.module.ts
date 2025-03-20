@@ -6,29 +6,35 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
-
 import { AppRoutingModule } from './app-routing.module';
-import { FileTreeComponent } from './Components/file-tree/file-tree.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { FileEditComponent } from './Components/file-edit/file-edit.component';
-import { DeleteConfirmationDialogComponent } from './Components/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 
+import { DeleteConfirmationDialogComponent } from './Components/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { MaterialFileTreeComponent } from './Components/material-file-tree/material-file-tree.component';
+import { FileInfoDialogComponent } from './Components/file-info-dialog/file-info-dialog.component';
 import { SearchFileComponent } from './Components/search-file/search-file.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FileTreeComponent,
-    FileEditComponent,
     DeleteConfirmationDialogComponent,
+    MaterialFileTreeComponent,
+    FileInfoDialogComponent,
     SearchFileComponent
   ],
   imports: [
@@ -41,12 +47,19 @@ import { SearchFileComponent } from './Components/search-file/search-file.compon
     MatCheckboxModule,
     FormsModule, 
     MatFormFieldModule, 
-    MatInputModule, 
-    MatProgressSpinnerModule, 
-    MatDialogModule, 
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
     MatButtonModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatListModule,
+    MatPaginatorModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

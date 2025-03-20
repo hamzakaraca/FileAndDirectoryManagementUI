@@ -1,36 +1,62 @@
 /* Dialog başlığını stillendirin */
 mat-dialog-title {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  /* Dialog içeriğini stillendirin */
-  mat-dialog-content {
-    text-align: center;
-    margin: 20px 0;
-  }
-  
-  /* Dialog butonlarını stillendirin */
-  mat-dialog-actions {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  /* Evet butonunu vurgulamak için */
-  button[color="warn"] {
-    background-color: #f44336; /* Kırmızı ton */
-    color: white;
-  }
-  
-  /* Hayır butonunun görünümünü değiştirmek için */
-  button {
-    background-color: #e0e0e0; /* Gri ton */
-    color: black;
-  }
-  
-  /* Butonlar üzerine gelindiğinde efekt vermek için */
-  button:hover {
-    opacity: 0.8; /* Buton üzerine gelindiğinde opaklık azalt */
-  }
-  
+  color: #f44336;
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Dialog içeriğini stillendirin */
+mat-dialog-content {
+  text-align: center;
+  margin: 24px 0;
+  color: var(--text-color);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Dialog butonlarını stillendirin */
+mat-dialog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px 0 0;
+  margin-bottom: 0;
+}
+
+/* Evet butonunu vurgulamak için */
+button[color="warn"] {
+  background-color: #f44336; /* Kırmızı ton */
+  color: white;
+}
+
+button[color="warn"]:hover {
+  background-color: #d32f2f;
+}
+
+/* Hayır butonunun görünümünü değiştirmek için */
+button {
+  min-width: 120px;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+  background-color: #e0e0e0; /* Gri ton */
+  color: black;
+}
+
+button.mat-stroked-button {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+button.mat-stroked-button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Butonlar üzerine gelindiğinde efekt vermek için */
+button:hover {
+  opacity: 0.8; /* Buton üzerine gelindiğinde opaklık azalt */
+}
+
+.delete-dialog-container {
+  padding: 24px;
+}

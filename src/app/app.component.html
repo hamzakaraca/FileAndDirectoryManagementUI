@@ -1,8 +1,11 @@
-<div>
- 
-  <app-file-tree ></app-file-tree>
-  <app-search-file></app-search-file>
-  <router-outlet></router-outlet>
-
+<div class="container">
+  <div class="header">
+    <h1>File Management System</h1>
+    <app-search-file class="search-section"></app-search-file>
+  </div>
+  
+  <div class="content">
+    <app-material-file-tree></app-material-file-tree>
+  </div>
 </div>
 

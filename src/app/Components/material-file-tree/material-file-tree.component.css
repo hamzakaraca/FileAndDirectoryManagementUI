@@ -1,0 +1,195 @@
+.tree-container {
+  margin: 15px;
+  height: 100%;
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  box-shadow: var(--box-shadow);
+  overflow: auto;
+}
+
+.mat-tree {
+  display: block;
+  background: transparent;
+}
+
+.mat-tree ul,
+.mat-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.mat-nested-tree-node {
+  position: relative;
+  padding-left: 20px;
+}
+
+.mat-tree-node {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 16px;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  transition: all 0.2s ease;
+  margin: 4px 0;
+}
+
+.mat-tree-node:hover {
+  background-color: rgba(63, 81, 181, 0.08);
+}
+
+.mat-tree-node.selected {
+  background-color: rgba(63, 81, 181, 0.12);
+}
+
+.nested-node {
+  margin-left: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+.nested-node::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+.mat-icon-rtl-mirror {
+  margin-right: 8px;
+}
+
+.tree-invisible {
+  display: none;
+}
+
+.node-name {
+  margin-left: 8px;
+  font-size: 14px;
+  user-select: none;
+  flex: 1;
+}
+
+.loading-indicator {
+  margin-left: 8px;
+  display: inline-block;
+}
+
+.loading-spinner {
+  margin-left: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.rotating {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+button[mat-icon-button] {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin-right: 4px;
+  line-height: 32px;
+}
+
+button[mat-icon-button][disabled] {
+  opacity: 0;
+}
+
+button[mat-icon-button]:hover {
+  background-color: rgba(63, 81, 181, 0.08);
+}
+
+mat-icon {
+  color: var(--primary-color);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  margin-right: 8px;
+  transition: transform 0.2s ease;
+}
+
+mat-icon.mat-icon-rtl-mirror {
+  margin-right: 0;
+}
+
+::ng-deep .mat-tooltip {
+  white-space: pre-line;
+  font-size: 12px;
+}
+
+::ng-deep .mat-menu-panel {
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+::ng-deep .mat-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  height: 40px;
+  padding: 0 16px;
+}
+
+li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+ul ul {
+  padding-left: 40px;
+}
+
+.file-menu-button {
+  visibility: hidden;
+  margin-left: auto;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.mat-tree-node:hover .file-menu-button {
+  visibility: visible;
+  opacity: 1;
+}
+
+.add-file-button {
+  visibility: hidden;
+  margin-left: auto;
+  color: #666;
+}
+
+.mat-tree-node:hover .add-file-button {
+  visibility: visible;
+}
+
+.add-file-button:hover {
+  color: #3f51b5;
+}

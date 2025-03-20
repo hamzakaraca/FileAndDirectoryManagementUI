@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Dosya Bilgisi</h2>
+<mat-dialog-content>
+  <div class="info-row">
+    <strong>Dosya Adı:</strong>
+    <span>{{ data.name }}</span>
+  </div>
+  <div class="info-row">
+    <strong>Dosya Yolu:</strong>
+    <span>{{ data.filePath }}</span>
+  </div>
+  <div class="info-row">
+    <strong>Boyut:</strong>
+    <span>{{ formatFileSize(data.size) }}</span>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onClose()">Kapat</button>
+</mat-dialog-actions>
