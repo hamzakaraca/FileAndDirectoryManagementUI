@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { FileNode } from '../Models/FileNode';
-import { FileEdit } from '../Models/FileEdit';
+
 
 @Injectable({
   providedIn: 'root'
@@ -38,15 +38,18 @@ export class FileService {
   }
 
   readFile(path: string): Observable<string> {
-    return this.http.get<string>(`${this.apiUrl}/readFile?path=${encodeURIComponent(path)}`);
+    return this.http.get(`${this.apiUrl}/readFile?filePath=${encodeURIComponent(path)}`, {
+      responseType: 'text'
+    });
   }
 
-  writeFile(filePath:string,content:string): Observable<any> {
-    const params = new HttpParams()
-      .set('filePath', filePath)
-      .set('content', content);
-    return this.http.post(`${this.apiUrl}/writeFile`, {params});
-    
+  writeFile(filePath: string, content: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/writeFile`, {
+      filePath: filePath,
+      content: content
+    }, {
+      responseType: 'text'  // Expecting text response from the server
+    });
   }
 
   createFile(path: string): Observable<any> {

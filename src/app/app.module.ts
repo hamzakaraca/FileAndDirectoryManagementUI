@@ -28,6 +28,7 @@ import { DeleteConfirmationDialogComponent } from './Components/delete-confirmat
 import { MaterialFileTreeComponent } from './Components/material-file-tree/material-file-tree.component';
 import { FileInfoDialogComponent } from './Components/file-info-dialog/file-info-dialog.component';
 import { SearchFileComponent } from './Components/search-file/search-file.component';
+import { FileEditComponent } from './Components/file-edit/file-edit.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SearchFileComponent } from './Components/search-file/search-file.compon
     DeleteConfirmationDialogComponent,
     MaterialFileTreeComponent,
     FileInfoDialogComponent,
-    SearchFileComponent
+    SearchFileComponent,
+    FileEditComponent
   ],
   imports: [
     BrowserModule,

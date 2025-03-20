@@ -1,9 +1,12 @@
-<h2 mat-dialog-title>Install Angular</h2>
+<h2 mat-dialog-title>Dosya Düzenle</h2>
 <mat-dialog-content class="mat-typography">
-  <h3>Content girin</h3>
-  <textarea [(ngModel)]="fileTreeService.fileEditModel.fileContent" class="content-area" name="" id=""></textarea>
+  <h3>Dosya İçeriği</h3>
+  <textarea [(ngModel)]="fileEditModel.content" class="content-area" rows="10" [disabled]="isSaving"></textarea>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" (click)="writeFile()" cdkFocusInitial>Save</button>
+  <button mat-button mat-dialog-close [disabled]="isSaving">İptal</button>
+  <button mat-button color="primary" (click)="writeFile()" [disabled]="isSaving">
+    <mat-icon *ngIf="isSaving">sync</mat-icon>
+    {{isSaving ? 'Kaydediliyor...' : 'Kaydet'}}
+  </button>
 </mat-dialog-actions>

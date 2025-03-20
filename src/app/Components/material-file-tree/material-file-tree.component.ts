@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileInfoDialogComponent } from '../file-info-dialog/file-info-dialog.component';
 import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { FileEditComponent } from '../file-edit/file-edit.component';
 
 @Component({
   selector: 'app-material-file-tree',
@@ -113,9 +114,28 @@ export class MaterialFileTreeComponent implements OnInit {
   }
 
   editFileContent(node: FileNode) {
-    // Dosya düzenleme işlemi için
-    console.log('Edit file:', node);
-    // Burada dosya düzenleme component'ini açabilirsiniz
+    this.fileService.readFile(node.filePath).subscribe({
+      next: (content) => {
+        const dialogRef = this.dialog.open(FileEditComponent, {
+          width: '800px',
+          data: { filePath: node.filePath, content: content }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            node.childrenLoaded = false;
+            const parentNode = node.parent ? this.findParentNode(this.dataSource.data, node) : null;
+            this.loadChildren(parentNode || node);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error reading file:', error);
+        this.snackBar.open('Dosya okuma hatası oluştu', 'Tamam', {
+          duration: 3000
+        });
+      }
+    });
   }
 
   deleteFile(node: FileNode) {

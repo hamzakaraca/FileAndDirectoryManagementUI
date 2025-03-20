@@ -24,6 +24,11 @@
   box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
 }
 
+.content-area:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
 ::ng-deep .mat-dialog-title {
   color: var(--primary-color);
   font-size: 24px;
@@ -50,4 +55,21 @@ button.mat-primary {
 
 button.mat-stroked-button {
   border-color: rgba(0, 0, 0, 0.12);
+}
+
+mat-icon {
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mat-icon[fonticon="sync"] {
+  animation: spin 1s linear infinite;
 }
